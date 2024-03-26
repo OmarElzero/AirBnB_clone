@@ -9,47 +9,43 @@ from models import storage
 class BaseModel:
     """This class is the base model"""
 
-    def __init__(self, *tuble, **dic):
+    def __init__(self, *args, **kwargs):
         """Initializes instance attributes
 
         Args:
-            - *tuble: tuble of arguments
-            - **dic: dictionary of key-values arguments
+            - *args: tuple of arguments
+            - **kwargs: dictionary of key-value arguments
         """
 
-        if dic is None or dic == {}:
+        if not kwargs:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.updated_at = self.created_at
             storage.new(self)
         else:
-            for key in dic:
-                if key == "created_at":
-                    self.__dict__["created_at"] = datetime.strptime(
-                        dic["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
-                elif key == "updated_at":
-                    self.__dict__["updated_at"] = datetime.strptime(
-                        dic["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
-                else:
-                    self.__dict__[key] = dic[key]
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                elif key != "__class__":
+                    setattr(self, key, value)
 
     def __str__(self):
         """Returns official string representation"""
 
-        return "[{}] ({}) {}".\
-            format(type(self).__name__, self.id, self.__dict__)
+        class_name = "[" + type(self).__name__ + "]"
+        return "{} ({}) {}".format(class_name, self.id, self.__dict__)
 
     def save(self):
-        """updates the public instance attribute updated_at"""
+        """Updates the public instance attribute updated_at"""
 
         self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
-        """returns a dictionary containing all keys/values of __dict__"""
+        """Returns a dictionary containing all keys/values of __dict__"""
 
         my_dict = self.__dict__.copy()
         my_dict["__class__"] = type(self).__name__
-        my_dict["created_at"] = my_dict["created_at"].isoformat()
-        my_dict["updated_at"] = my_dict["updated_at"].isoformat()
+        my_dict["created_at"] = self.created_at.isoformat()
+        my_dict["updated_at"] = self.updated_at.isoformat()
         return my_dict
