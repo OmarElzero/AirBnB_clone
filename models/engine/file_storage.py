@@ -13,7 +13,7 @@ class FileStorage:
         return FileStorage.__objects
 
     def reload(self):
-        """Loads storage dict from any file"""
+        """Loads storage dictionary from any file"""
         from models.base_model import BaseModel
         from models.user import User
         from models.place import Place
