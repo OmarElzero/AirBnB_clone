@@ -37,7 +37,7 @@ class FileStorage:
             pass
 
     def save(self):
-        """Saves storage dict to file"""
+        """Saves storage dictiionary to file"""
         with open(FileStorage.__file_path, 'w') as file:
             holder = {}
             holder.update(FileStorage.__objects)
