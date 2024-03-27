@@ -4,7 +4,7 @@ import json
 
 
 class FileStorage:
-    """ managing storage of alx airbnb models in JSON format"""
+    """ managing storage of airbnb models in JSON format"""
     __file_path = 'file.json'
     __objects = {}
 
