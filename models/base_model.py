@@ -34,7 +34,7 @@ class BaseModel:
                     self.__dict__[key] = dic[key]
 
     def __str__(self):
-        """Returns official string representation"""
+        """Returns official string representation for class"""
 
         return "[{}] ({}) {}".\
             format(type(self).__name__, self.id, self.__dict__)
