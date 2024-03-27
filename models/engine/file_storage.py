@@ -46,5 +46,5 @@ class FileStorage:
             json.dump(holder, file)
 
     def new(self, obj):
-        """Adding new object to dict"""
+        """Adding new object to dictionary."""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
