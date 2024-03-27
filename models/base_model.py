@@ -10,7 +10,7 @@ class BaseModel:
     """This class is the base model"""
 
     def __init__(self, *tuble, **dic):
-        """Initializes instance attributes
+        """Initializes instance attributes for class
 
         Args:
             - *tuble: tuble of arguments
